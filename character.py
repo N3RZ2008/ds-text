@@ -1,8 +1,8 @@
 from rich.console import Console
+from rich.live import Live
 r = Console()
 
 import dsStorage as dsS
-import utility as ut
 from style import createStatMenu
 
 class Character:
@@ -31,11 +31,9 @@ class Character:
         return
 
     def showStats(self):
-        ut.clear()
-            
-        r.print(createStatMenu(list(self.stats.values()), self.soulQuantity, dsS.getSoulsRequired(self.stats["Level"])))
-        wait = input()
-        ut.clear()
+        r.clear()  
+        with Live(createStatMenu(list(self.stats.values()), self.soulQuantity, dsS.getSoulsRequired(self.stats["Level"]))):
+            wait = input()
         return
     
     def upgrade(self, stat):
@@ -53,6 +51,4 @@ class Character:
 
     def getSouls(self, quantity):
         self.soulQuantity += quantity
-
-# test = Character("Teste", [0,0,0,0,0,0,0,0,0,0])
-# test.showStats()
+        

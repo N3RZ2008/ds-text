@@ -1,9 +1,6 @@
 from rich.console import Console
+r = Console()
 from rich.layout import Layout
-from rich import print
-from rich.panel import Panel
-
-console = Console()
 
 def createStatMenu(stats, souls, requiredSouls):
     menu = Layout()
@@ -11,7 +8,8 @@ def createStatMenu(stats, souls, requiredSouls):
     menu.split_column(
         Layout(name="root")
     )
-    menu["root"].minimum_size = 18
+    menu["root"].size = 18
+    void = r.size.height - menu["root"].size
 
     menu["root"].split_row(
         Layout(name="stats"),
@@ -69,5 +67,4 @@ Press any button to continue
 {stats[9]}
     '''
     )
-
     return menu

@@ -1,5 +1,7 @@
+from rich.console import Console
+r = Console()
+
 import dsStorage
-import utility as ut
 from character import Character
 
 class Game():
@@ -14,11 +16,11 @@ class Game():
         return Character(charName, dsStorage.ClassesStats[dsStorage.ClassesIDs[charClass]])
     def simulation(self, character):
         while True:
-            ut.clear()
+            r.clear()
             action = int(input(
                 "[0] Leave\n[1] Get souls\n[2] Upgrade\n[3] Show Stats\nChoose: "
             ))
-            ut.clear()
+            r.clear()
             if action == 0:
                 break
             elif action == 1:
@@ -39,4 +41,3 @@ class Game():
             else:
                 pass
             
-
