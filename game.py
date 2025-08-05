@@ -1,7 +1,8 @@
+import inquirer
 from rich.console import Console
 r = Console()
 
-import dsStorage
+import dsStorage as dsS
 from character import Character
 
 class Game():
@@ -9,24 +10,32 @@ class Game():
         pass
     def createCharacter(self):
         charName = input("Your name: ")
-        for i in range(len(dsStorage.ClassesIDs)):
-            print(f"[{i}] {dsStorage.ClassesIDs[i]}")
-        charClass = int(input("Choose your class:"))
+        questions = [
+            inquirer.List(
+                "class",
+                message="Choose your Class:",
+                choices=dsS.ClassesIDs
+            )
+        ]
+        choice = inquirer.prompt(questions)
+        # for i in range(len(dsS.ClassesIDs)):
+        #     print(f"[{i}] {dsS.ClassesIDs[i]}")
+        # charClass = int(input("Choose your class:"))
 
-        return Character(charName, dsStorage.ClassesStats[dsStorage.ClassesIDs[charClass]])
+        return Character(charName, dsS.ClassesStats[choice["class"]])
     def simulation(self, character):
         while True:
             r.clear()
-            action = int(input(
+            action = input(
                 "[0] Leave\n[1] Get souls\n[2] Upgrade\n[3] Show Stats\nChoose: "
-            ))
+            )
             r.clear()
-            if action == 0:
+            if action == "0" or "":
                 break
-            elif action == 1:
+            elif action == "1":
                 quantity = int(input("How much: "))
                 character.getSouls(quantity)
-            elif action == 2:
+            elif action == "2":
                 print("Choose stat")
                 print()
                 statList = list(character.stats.keys())
@@ -36,7 +45,7 @@ class Game():
                 print()
                 print(character.upgrade(statList[stat]))
                 print()
-            elif action == 3:
+            elif action == "3":
                 character.showStats()
             else:
                 pass
